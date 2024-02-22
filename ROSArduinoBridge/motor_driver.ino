@@ -86,6 +86,40 @@
     setMotorSpeed(LEFT, leftSpeed);
     setMotorSpeed(RIGHT, rightSpeed);
   }
+
+  #elif defined POLOLU_MD07A
+
+  void initMotorController() {
+    pinMode(LEFT_MOTOR_DIR, OUTPUT);
+    pinMode(RIGHT_MOTOR_DIR, OUTPUT);
+  }
+  
+  void setMotorSpeed(int i, int spd) {
+    unsigned char reverse = 0;
+  
+    if (spd < 0)
+    {
+      spd = -spd;
+      reverse = 1;
+    }
+    if (spd > 255)
+      spd = 255;
+    
+    if (i == LEFT) { 
+      if      (reverse == 0) { digitalWrite(LEFT_MOTOR_DIR, HIGH); analogWrite(LEFT_MOTOR_PWM, spd); }
+      else if (reverse == 1) { digitalWrite(LEFT_MOTOR_DIR, LOW); analogWrite(LEFT_MOTOR_PWM, spd); }
+    }
+    else /*if (i == RIGHT) //no need for condition*/ {
+      if      (reverse == 0) { digitalWrite(RIGHT_MOTOR_DIR, HIGH); analogWrite(RIGHT_MOTOR_PWM, spd);}
+      else if (reverse == 1) { digitalWrite(RIGHT_MOTOR_DIR, LOW); analogWrite(RIGHT_MOTOR_PWM, spd);}
+    }
+  }
+  
+  void setMotorSpeeds(int leftSpeed, int rightSpeed) {
+    setMotorSpeed(LEFT, leftSpeed);
+    setMotorSpeed(RIGHT, rightSpeed);
+  }
+  
 #else
   #error A motor driver must be selected!
 #endif

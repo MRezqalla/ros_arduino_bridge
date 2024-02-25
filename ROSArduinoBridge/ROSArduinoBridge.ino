@@ -229,7 +229,11 @@ int runCommand() {
     resetPID();
     moving = 0; // Sneaky way to temporarily disable the PID
     setMotorSpeeds(arg1, arg2);
-    Serial.println("OK"); 
+    Serial.println("OK");
+    Serial.print("Arg 1: ");
+    Serial.println(arg1);
+    Serial.print("Arg 2: ");
+    Serial.println(arg2); 
     break;
   case UPDATE_PID:
     while ((str = strtok_r(p, ":", &p)) != '\0') {
@@ -359,4 +363,3 @@ void loop() {
   }
 #endif
 }
-
